@@ -1,0 +1,22 @@
+<div class="container text-center">
+
+    <h3 class="py-3">Angular example - Consuming API & data plotting with chart.js</h3>
+
+    <p>Some of the topics covered in this example include: ng-bootstrap for html formatting, ng2-charts/chart.js for visual representation,
+        HttpClient service for queries, interfaces, mock json-server for data consuming, generator for random data generation,
+        and others.
+    </p>
+
+    <div class="row row-cols-sm-1 row-cols-md-1 row-cols-lg-2 pb-3">
+
+        <div class="col pt-3" *ngFor="let feature of featureObjectArray">
+
+            <app-plot [featureName]="feature.name" [featureTitle]="feature.title"
+                [featureDefinition]="feature.definition" [featureTrend]="feature.trend">
+            </app-plot>
+
+        </div>
+
+    </div>
+
+</div>

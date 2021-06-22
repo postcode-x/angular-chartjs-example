@@ -1,0 +1,14 @@
+a:link, a:visited {
+    color: white;
+  }
+  
+a:hover, a:active {
+    color: #3998db;
+}
+
+#overlay{
+  position: absolute;
+  top:20px;
+  left:20px;
+  z-index: 5;
+}
