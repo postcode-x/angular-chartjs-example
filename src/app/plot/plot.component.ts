@@ -17,16 +17,16 @@ export class PlotComponent implements OnInit {
       animationDuration: 0
     },
     scaleShowVerticalLines: false,
-    responsive: true, 
+    responsive: true,
     legend : {
       labels : {
         fontColor : '#ffffff',
-        boxWidth: 20 
+        boxWidth: 20
       }
     },
     scales: {
       xAxes: [{
-          
+
           type: 'linear',
           position: 'bottom',
           gridLines: {
@@ -65,7 +65,7 @@ export class PlotComponent implements OnInit {
     onClick: function (event : any, array: any){
         if(array.length>0){
           if(array[0]._datasetIndex == 1){
-            var song_id = array[0]._chart.config.data.datasets[1].data[array[0]._index].song_id;
+            let song_id = array[0]._chart.config.data.datasets[1].data[array[0]._index].song_id;
             window.open('https://open.spotify.com/track/'+song_id, '_blank');
           }
         }
@@ -97,14 +97,14 @@ export class PlotComponent implements OnInit {
 
     this.titleText = this.featureTitle;
 
-    var step : number = 0;
-    var max : number = 1;
-    var min : number = 0;
-    var thisFeatureName = this.featureName;
-    var fontsize = 10;
+    let step : number = 0;
+    let max : number = 1;
+    let min : number = 0;
+    let thisFeatureName = this.featureName;
+    let fontsize = 10;
 
     switch(thisFeatureName){
-      case 'danceability': 
+      case 'danceability':
       case 'energy':
       case 'speechiness':
       case 'acousticness':
@@ -155,14 +155,14 @@ export class PlotComponent implements OnInit {
 
     const keyLabels = ['C','C#', 'D','Eb', 'E','F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
     const modeLabels = ['Minor', 'Major'];
-    
+
     this.chartOptions.scales.yAxes[0].ticks.min = min;
     this.chartOptions.scales.yAxes[0].ticks.max = max;
     this.chartOptions.scales.yAxes[0].ticks.fontSize = fontsize;
     this.chartOptions.scales.yAxes[0].ticks.stepSize = step;
-    
+
     this.chartOptions.scales.yAxes[0].ticks.callback = function(value: any, index: any, values: any) {
-        
+
         if(thisFeatureName == 'key_center'){
           return keyLabels[value]};
         if(thisFeatureName == 'mode'){
@@ -171,25 +171,25 @@ export class PlotComponent implements OnInit {
           return value+'/4'};
 
         return value;
-  
+
     }
 
     this.chartOptions.tooltips.callbacks = {
 
       label: function(tooltipItem: any, data: any) {
 
-        var feature_name = data.datasets[1].data[tooltipItem.index].feature_name;
-        var song_name = data.datasets[1].data[tooltipItem.index].song_name;
-        var artist = data.datasets[1].data[tooltipItem.index].artist;
+        let feature_name = data.datasets[1].data[tooltipItem.index].feature_name;
+        let song_name = data.datasets[1].data[tooltipItem.index].song_name;
+        let artist = data.datasets[1].data[tooltipItem.index].artist;
 
         if (tooltipItem.datasetIndex == 1){
 
           return artist + ' - ' + song_name  ;
 
         }else{
-          
-          var currentLabel = tooltipItem.yLabel;
-          
+
+          let currentLabel = tooltipItem.yLabel;
+
           if(thisFeatureName == 'key_center'){
             currentLabel = keyLabels[tooltipItem.yLabel.toFixed(0)]};
           if(thisFeatureName == 'mode'){
@@ -200,15 +200,15 @@ export class PlotComponent implements OnInit {
           return feature_name + ': ' + currentLabel + ' on average';
 
         }
-        
+
       },
       title: function(tooltipItem: any, data: any){
 
-        var feature_name = data.datasets[1].data[tooltipItem[0].index].feature_name;
+        let feature_name = data.datasets[1].data[tooltipItem[0].index].feature_name;
 
         if (tooltipItem[0].datasetIndex == 1){
 
-          var currentLabel = tooltipItem[0].yLabel;
+          let currentLabel = tooltipItem[0].yLabel;
 
           if(thisFeatureName == 'key_center'){
             currentLabel = keyLabels[tooltipItem[0].yLabel]};
@@ -223,33 +223,31 @@ export class PlotComponent implements OnInit {
 
           return 'Year '+ tooltipItem[0].xLabel;
 
-        }  
+        }
       }
     }
 
     let lastResponseData = {} as any;
 
     this.spotifyFeatures.responseData.subscribe((res: {}) => {
-      
-      lastResponseData = res;
-      this.loading = lastResponseData.isLoading; // (LOADING => NOT HIDDEN) 
-      
-      if (!this.loading) {
 
-        console.log(lastResponseData.plotData);
+      lastResponseData = res;
+      this.loading = lastResponseData.isLoading; // (LOADING => NOT HIDDEN)
+
+      if (!this.loading) {
 
         this.plotdata = lastResponseData.plotData;
 
-        for (var i = 0; i < this.plotdata.length; i++) {
+        for (let i = 0; i < this.plotdata.length; i++) {
 
           let currentYear = this.plotdata[i].year;
           let currentData = this.plotdata[i].data;
           let average = 0;
           let repeatedFilter = [] as any;
 
-          for (var j = 0; j < currentData.length; j++) {
+          for (let j = 0; j < currentData.length; j++) {
 
-            var feature_value = parseFloat(currentData[j][this.featureName]);
+            let feature_value = parseFloat(currentData[j][this.featureName]);
 
             if (this.featureName == 'duration_ms') {
               feature_value = feature_value / 1000;
@@ -286,10 +284,10 @@ export class PlotComponent implements OnInit {
 
   }
 
-  openRandomSong() { 
+  openRandomSong() {
 
     if (!this.loading && this.chartData[1].data.length > 0){
-      let randomIndex = this.getRandomNumber(0, this.chartData[1].data.length); 
+      let randomIndex = this.getRandomNumber(0, this.chartData[1].data.length);
       window.open('https://open.spotify.com/track/'+this.chartData[1].data[randomIndex].song_id, '_blank');
     }
 

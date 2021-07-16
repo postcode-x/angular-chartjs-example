@@ -82,7 +82,7 @@ export class MainComponent implements OnInit {
 
     this.spotifyFeatures.processFeatures();
 
-    for (var i = 0; i < this.featureList.length; i++) {
+    for (let i = 0; i < this.featureList.length; i++) {
 
       this.featureObjectArray.push({
         name: this.featureList[i],

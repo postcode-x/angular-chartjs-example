@@ -37,7 +37,7 @@ export class FeaturesService {
 
   private baseURL : string = 'http://localhost:3000/output';
   private eventObservable! : Observable<HttpEvent<SpotifyFeatures>>  ;
-  
+
   public responseData = new BehaviorSubject({});
   public loading: boolean = true;
 
@@ -56,18 +56,18 @@ export class FeaturesService {
 
   processFeatures(){
 
-    var lastObject = {
-      loaded: 0, 
-      total: 2167328, 
-      isLoading: this.loading, 
+    let lastObject = {
+      loaded: 0,
+      total: 2167328,
+      isLoading: this.loading,
       plotData: [] as any};
-    
-    this.setResponseData(lastObject); 
+
+    this.setResponseData(lastObject);
 
     this.downloadFeatures().subscribe(
       event => {
         if (event.type == HttpEventType.DownloadProgress) {
-          
+
           lastObject.loaded = event.loaded;
           this.setResponseData(lastObject); // CALLED HERE FOR UPDATES
 
